@@ -182,12 +182,12 @@ Select **2**, enter the app name and your username, then choose to either genera
 
 | # | Name |
 |---|---|
-| 1 | George Ashraf |
-| 2 | Dr. Ahmed Magdy Hassan |
-| 3 | Eng. Abdallah Aboghaly |
-| 4 | Mr. Ahmed Magdy Amen |
-| 5 | Abdo Ismail |
-| 6 | *(Team Member 6)* |
+| 1 | Peter Hany |
+| 2 | George Ashraf |
+| 3 | Ahmed Magdy Hassan |
+| 4 | Abdallah Aboghaly |
+| 5 | Ahmed Magdy Amen |
+| 6 | Abdo Ismail |
 
 ---
 
