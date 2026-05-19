@@ -1,5 +1,7 @@
 #include <iostream>
 #include <vector>
+#include <thread>
+#include <chrono>
 #include "BSTree/BSTree.h"
 #include "App/app.h"
 #include "User/user.h"
@@ -20,11 +22,11 @@ public:
         string realAppNames[100] = {
             "YouTube", "Facebook", "Instagram", "WhatsApp", "TikTok", "Snapchat", "Twitter", "LinkedIn", "Pinterest", "Reddit",
             "Spotify", "Netflix", "Hulu", "AmazonPrime", "DisneyPlus", "Twitch", "Discord", "Slack", "Zoom", "MicrosoftTeams",
-            "GoogleDrive", "Dropbox", "OneDrive", "iCloud", "Gmail", "Outlook", "YahooMail", "ProtonMail", "Uber", "Lyft",
+            "GoogleDrive", "Dropbox", "OneDrive", "ICloud", "Gmail", "Outlook", "YahooMail", "ProtonMail", "Uber", "Lyft",
             "Airbnb", "BookingCom", "TripAdvisor", "Expedia", "GoogleMaps", "AppleMaps", "Waze", "Yelp", "Shazam", "SoundCloud",
             "Pandora", "Tidal", "Deezer", "Audible", "Kindle", "Wattpad", "Goodreads", "Duolingo", "Coursera", "Udemy",
             "KhanAcademy", "Quizlet", "Evernote", "Notion", "Trello", "Asana", "MondayCom", "Todoist", "TickTick", "GoogleKeep",
-            "AdobePhotoshop", "Lightroom", "Canva", "PicsArt", "Figma", "Sketch", "Procreate", "CapCut", "iMovie", "TikTokStudio",
+            "AdobePhotoshop", "Lightroom", "Canva", "PicsArt", "Figma", "Sketch", "Procreate", "CapCut", "IMovie", "TikTokStudio",
             "PayPal", "Venmo", "CashApp", "Zelle", "Revolut", "Wise", "Robinhood", "Coinbase", "Binance", "Webull",
             "Steam", "EpicGames", "DiscordApp", "PlayStationApp", "XboxApp", "NintendoSwitch", "TwitchTv", "Minecraft", "Roblox", "PokemonGo",
             "Tinder", "Bumble", "Hinge", "Grindr", "OkCupid", "Strava", "Fitbit", "MyFitnessPal", "Headspace", "Calm"};
@@ -51,7 +53,12 @@ public:
     int handleMenuSelection()
     {
         int input;
-        cin >> input;
+        while (!(std::cin >> input))
+        {
+            cout << "Invalid input! Please enter a number: ";
+            cin.clear();
+            cin.ignore(1000, '\n');
+        }
         cin.ignore(1000, '\n');
         return input;
     }
@@ -80,15 +87,35 @@ public:
             cout << "Incorrect password. Retry...\n\n";
             login();
         }
+
+        this_thread::sleep_for(chrono::seconds(2));
+        system("cls");
     }
 
     void showPasswords()
     {
         user1.displayApps();
+        cout << "type \"return\" to return back to main menu: ";
+        string input = handleUserInput();
+        for (char &c : input)
+        {
+            c = tolower(c);
+        }
+
+        while (input != "return")
+        {
+            cout << "PLEASE TYPE \"RETURN\": ";
+            input = handleUserInput();
+            for (char &c : input)
+            {
+                c = tolower(c);
+            }
+        }
     }
 
     void addPassword()
     {
+        system("cls");
         string randompass;
 
         cout << "\t\t Password Manager \t\t\n\n";
@@ -125,6 +152,14 @@ public:
             cout << "Size: ";
             cin >> size;
             cin.ignore(1000, '\n');
+            while (size < 8)
+            {
+                cout << "password NOT LESS THAN 8\n";
+                cout << "Size: ";
+                cin >> size;
+                cin.ignore(1000, '\n');
+            }
+
             app1.insertRandomPass(size);
         }
         else
@@ -134,6 +169,7 @@ public:
             app1.insertPass(handleUserInput());
             cout << '\n';
         }
+        cout << "Data is saved...\n";
         user1.insertApp(app1);
     }
 
@@ -162,40 +198,58 @@ public:
         {
         case 1:
             showPasswords();
+            system("cls");
             return home();
         case 2:
             addPassword();
+            this_thread::sleep_for(chrono::seconds(2));
+            system("cls");
             return home();
         case 3:
             user1.editApp();
+            system("cls");
             return home();
         case 4:
             user1.deleteApp();
+            system("cls");
             return home();
         case 5:
             user1.Sort();
+            cout << "Sorting is done..\n";
+            this_thread::sleep_for(chrono::seconds(2));
+            system("cls");
             return home();
         case 6:
             cout << "What do you want to search for?\nEnter a App name: ";
             target = handleUserInput();
             user1.Search(target);
+            this_thread::sleep_for(chrono::seconds(2));
+            system("cls");
             return home();
         case 7:
             user1.whichSortBetter();
+            this_thread::sleep_for(chrono::seconds(5));
+            system("cls");
             return home();
         case 8:
             cout << "What do you want to search for?\nEnter a App name: ";
             target = handleUserInput();
             user1.whichSearchBetter(target);
+            this_thread::sleep_for(chrono::seconds(5));
+            system("cls");
             return home();
         case 9:
             login();
+            system("cls");
             return home();
         case 0:
             cout << "\nExiting program. Goodbye!\n";
+            this_thread::sleep_for(chrono::seconds(2));
             exit(0);
         default:
             cout << "Please choose from 0 to 5\n\n\n";
+            this_thread::sleep_for(chrono::seconds(2));
+            system("cls");
             return home();
         }
     }

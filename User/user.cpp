@@ -1,5 +1,7 @@
 #include <iostream>
 #include <iomanip>
+#include <chrono>
+#include <thread>
 #include "user.h"
 #include "../App/app.h"
 #include "../Sort_Search_algo/sort_search_algo.h"
@@ -63,7 +65,12 @@ void user::editApp()
     string newpass;
 
     cout << "Choose from 0 to " << i - 1 << " : ";
-    cin >> choice;
+    while (!(std::cin >> choice))
+    {
+        cout << "Invalid input! Please enter a number: ";
+        cin.clear();
+        cin.ignore(1000, '\n');
+    }
     cin.ignore(1000, '\n');
 
     cout << "Change the password for: " << apps[choice].getAppName() << '\n';
@@ -92,7 +99,12 @@ void user::editApp()
         int size;
         cout << "Choose the size of your password NOT LESS THAN 8\n";
         cout << "Size: ";
-        cin >> size;
+        while (!(std::cin >> size))
+        {
+            cout << "Invalid input! Please enter a number: ";
+            cin.clear();
+            cin.ignore(1000, '\n');
+        }
         cin.ignore(1000, '\n');
         apps[choice].insertRandomPass(size);
     }
@@ -105,6 +117,8 @@ void user::editApp()
         apps[choice].insertPass(newpass);
 
         cout << "Password has been updated!\n\n";
+
+        this_thread::sleep_for(chrono::seconds(2));
     }
 }
 
@@ -118,10 +132,14 @@ void user::deleteApp()
     }
 
     int choice = 0;
-    cout << "Choose from 0 to " << i << " : ";
-    cin >> choice;
+    cout << "Choose from 0 to " << i - 1 << " : ";
+    while (!(std::cin >> choice))
+    {
+        cout << "Invalid input! Please enter a number: ";
+        cin.clear();
+        cin.ignore(1000, '\n');
+    }
     cin.ignore(1000, '\n');
-
     apps.erase(apps.begin() + choice);
 
     cout << "Password has been Removed!\n\n";
@@ -280,7 +298,7 @@ void user::Search(string _target)
     }
     else
     {
-        cout << _target << "is at index: " << found << '\n';
+        cout << _target << " is at index: " << found << '\n';
     }
 }
 
